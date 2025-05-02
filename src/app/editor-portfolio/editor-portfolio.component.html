@@ -1,0 +1,76 @@
+<div class="container mt-5">
+    <h2 class="text-center mb-4">My Portfolio Editor</h2>
+  
+    <!-- Formulaire d'ajout de projet -->
+    <form [formGroup]="portfolioForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label>Title</label>
+        <input formControlName="title" class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label>Description</label>
+        <textarea formControlName="description" class="form-control"></textarea>
+      </div>
+      <div class="mb-3">
+        <label>Technologies</label>
+        <input formControlName="technologies" class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label>Link</label>
+        <input formControlName="link" class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label>Image</label>
+        <input type="file" (change)="onFileSelected($event)" class="form-control" />
+      </div>
+  
+      <div *ngIf="previewUrl" class="mb-3">
+        <img [src]="previewUrl" class="img-thumbnail" width="200" />
+      </div>
+  
+      <hr class="my-5" />
+      <h4>Mes coordonnées pour la section Contact</h4>
+  
+      <div class="mb-3">
+        <label>Votre nom</label>
+        <input formControlName="contactName" class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label>Votre email</label>
+        <input formControlName="contactEmail" type="email" class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label>Message personnalisé</label>
+        <textarea formControlName="contactMessage" rows="4" class="form-control"></textarea>
+      </div>
+  
+      <button class="btn btn-success w-100" type="submit" [disabled]="portfolioForm.invalid">Add Project</button>
+    </form>
+  
+    <hr class="my-5" />
+    <div class="text-center mb-4">
+      <button class="btn btn-primary" (click)="exportPDF()">Export Portfolio as PDF</button>
+    </div>
+    <a class="btn btn-outline-dark mt-3" routerLink="/portfolio-preview">
+      Aperçu public du Portfolio
+    </a>
+  
+    <!-- Preview des projets -->
+    <div #templateRef class="row mt-5">
+      <div *ngFor="let project of projects; let i = index" class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <img *ngIf="project.imageUrl" [src]="project.imageUrl" class="card-img-top" />
+          <div class="card-body">
+            <h5 class="card-title">{{ project.title }}</h5>
+            <p class="card-text">{{ project.description }}</p>
+            <p><strong>Tech:</strong> {{ project.technologies }}</p>
+            <a [href]="project.link" target="_blank" class="btn btn-outline-primary btn-sm">View</a>
+          </div>
+          <div class="card-footer text-end">
+            <button class="btn btn-sm btn-danger" (click)="deleteProject(i)">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

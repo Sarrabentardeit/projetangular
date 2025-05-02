@@ -1,0 +1,101 @@
+<!-- Bandeau vert avec titre -->
+<div class="header-green text-center text-white py-5">
+  <h2 class="fw-bold">Créer mon CV</h2>
+</div>
+
+<div class="container d-flex justify-content-center mt-5">
+  <div class="form-card shadow p-4 bg-white w-100">
+    <h2 class="text-center fw-bold mb-4">Edit Your CV</h2>
+
+    <form [formGroup]="cvForm" (ngSubmit)="onSubmit()">
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label for="name">Full Name</label>
+          <input id="name" formControlName="name" class="form-control" placeholder="Enter your full name" />
+        </div>
+
+        <div class="col-md-6">
+          <label for="email">Email</label>
+          <input id="email" formControlName="email" class="form-control" placeholder="Enter your email" />
+        </div>
+
+        <div class="col-md-6">
+          <label for="phone">Phone</label>
+          <input id="phone" formControlName="phone" class="form-control" placeholder="Enter your phone number" />
+        </div>
+
+        <div class="col-md-6">
+          <label for="address">Address</label>
+          <input id="address" formControlName="address" class="form-control" placeholder="Enter your address" />
+        </div>
+
+        <div class="col-md-6">
+          <label for="birthday">Birthday</label>
+          <input id="birthday" type="date" formControlName="birthday" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+          <label for="languages">Languages</label>
+          <input id="languages" formControlName="languages" class="form-control" placeholder="Languages you speak" />
+        </div>
+
+        <div class="col-12">
+          <label for="education">Education</label>
+          <textarea id="education" formControlName="education" class="form-control" rows="2" placeholder="Enter your education background"></textarea>
+        </div>
+
+        <div class="col-12">
+          <label for="experience">Experience</label>
+          <textarea id="experience" formControlName="experience" class="form-control" rows="2" placeholder="Enter your professional experience"></textarea>
+        </div>
+
+        <div class="col-12">
+          <label for="skills">Skills</label>
+          <textarea id="skills" formControlName="skills" class="form-control" rows="2" placeholder="Enter your professional skills"></textarea>
+        </div>
+
+        <div class="col-12">
+          <label for="profileImage">Upload Profile Image</label>
+          <input type="file" id="profileImage" (change)="onFileSelected($event)" class="form-control" />
+        </div>
+      </div>
+
+      <div class="d-flex gap-3 mt-4">
+        <button type="submit" class="btn btn-primary w-50" [disabled]="cvForm.invalid">Save CV</button>
+        <button type="button" class="btn btn-success w-50" (click)="generatePDF()">Download PDF</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- Affichage dynamique des templates -->
+<div class="container mt-5">
+  <ng-container [ngSwitch]="selectedTemplate">
+    <app-template1
+      *ngSwitchCase="'template1'"
+      [formData]="cvForm.value"
+      [profileImageUrl]="profileImageUrl"
+      #templateComponent>
+    </app-template1>
+
+    <app-template2
+      *ngSwitchCase="'template2'"
+      [formData]="cvForm.value"
+      [profileImageUrl]="profileImageUrl"
+      #templateComponent>
+    </app-template2>
+
+    <app-template3
+      *ngSwitchCase="'template3'"
+      [formData]="cvForm.value"
+      [profileImageUrl]="profileImageUrl"
+      #templateComponent>
+    </app-template3>
+  </ng-container>
+</div>
