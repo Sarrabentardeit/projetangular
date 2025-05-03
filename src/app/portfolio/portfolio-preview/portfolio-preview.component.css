@@ -1,5 +1,7 @@
-/* --- Background personnalisé --- */
-.custom-background {
+.header-green {
+    background-color: #28c76f;
+  }
+     .custom-background {
     background: linear-gradient(to right, #f4f4f4, #fefefe);
     min-height: 100vh;
     padding-top: 60px;
@@ -141,4 +143,3 @@
       font-size: 0.9rem;
     }
   }
-  

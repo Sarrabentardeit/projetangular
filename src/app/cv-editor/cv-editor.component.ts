@@ -74,23 +74,6 @@ export class CvEditorComponent implements OnInit {
   
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
   
-      pdf.addPage();
-      autoTable(pdf, {
-        startY: 10,
-        head: [['Field', 'Value']],
-        body: [
-          ['Full Name', this.cvForm.value.name],
-          ['Email', this.cvForm.value.email],
-          ['Phone', this.cvForm.value.phone],
-          ['Address', this.cvForm.value.address],
-          ['Birthday', this.cvForm.value.birthday],
-          ['Education', this.cvForm.value.education],
-          ['Languages', this.cvForm.value.languages],
-          ['Experience', this.cvForm.value.experience],
-          ['Skills', this.cvForm.value.skills],
-        ]
-      });
-  
       pdf.save('my_cv.pdf');
     });
   }

@@ -1,7 +1,8 @@
-<div class="container mt-5">
-    <h2 class="text-center mb-4">My Portfolio Editor</h2>
+<div class="header-green text-center text-white py-5">
+    <h2 class="fw-bold">Créer mon Portfolio</h2>
+  </div>
   
-    <!-- Formulaire d'ajout de projet -->
+  <div class="container mt-5">
     <form [formGroup]="portfolioForm" (ngSubmit)="onSubmit()">
       <div class="mb-3">
         <label>Title</label>
@@ -48,15 +49,12 @@
     </form>
   
     <hr class="my-5" />
-    <div class="text-center mb-4">
-      <button class="btn btn-primary" (click)="exportPDF()">Export Portfolio as PDF</button>
-    </div>
+    
     <a class="btn btn-outline-dark mt-3" routerLink="/portfolio-preview">
       Aperçu public du Portfolio
     </a>
   
-    <!-- Preview des projets -->
-    <div #templateRef class="row mt-5">
+    <div class="row mt-5">
       <div *ngFor="let project of projects; let i = index" class="col-md-4 mb-4">
         <div class="card h-100 shadow-sm">
           <img *ngIf="project.imageUrl" [src]="project.imageUrl" class="card-img-top" />

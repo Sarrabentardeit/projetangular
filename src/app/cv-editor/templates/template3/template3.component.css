@@ -5,8 +5,14 @@
     padding: 30px;
     border: 1px solid #e0cda9;
     border-radius: 8px;
+    min-height: 1800px;
   }
-  
+  :host {
+    display: block;
+    background-color: #fdf6e3;
+    min-height: 100vh;
+    padding: 30px;
+  }
   .banner {
     text-align: center;
     padding: 10px 0;

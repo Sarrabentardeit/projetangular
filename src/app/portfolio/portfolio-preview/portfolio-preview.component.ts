@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PortfolioProject } from '../../models/portfolio.model';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-portfolio-preview',
@@ -18,15 +19,23 @@ export class PortfolioPreviewComponent implements OnInit {
     message: ''
   };
 
-  ngOnInit(): void {
-    const saved = localStorage.getItem('userPortfolio');
-    if (saved) {
-      this.projects = JSON.parse(saved);
-    }
+  constructor(private authService: AuthService) {}
 
-    const contact = localStorage.getItem('userContact');
-    if (contact) {
-      this.contactInfo = JSON.parse(contact);
+  ngOnInit(): void {
+    const email = this.authService.getUserEmail(); // ✅ dynamique
+
+    if (email) {
+      const saved = localStorage.getItem(`${email}_userPortfolio`);
+      if (saved) {
+        this.projects = JSON.parse(saved);
+      }
+
+      const contact = localStorage.getItem(`${email}_userContact`);
+      if (contact) {
+        this.contactInfo = JSON.parse(contact);
+      }
+    } else {
+      alert('Aucun utilisateur connecté.');
     }
   }
 }

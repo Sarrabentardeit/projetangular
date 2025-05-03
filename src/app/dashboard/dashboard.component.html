@@ -1,13 +1,19 @@
-<div class="container mt-5">
-    <div class="text-center">
-      <h1>Welcome to Your Dashboard</h1>
-      <p class="lead">Here you can create your CV and manage your portfolio.</p>
-  
-      <div class="d-grid gap-3 col-6 mx-auto mt-4">
-        <a routerLink="/choose-template" class="btn btn-outline-primary btn-lg">Create / Edit My CV</a>
-        <a routerLink="/editor-portfolio" class="btn btn-outline-secondary btn-lg">Manage My Portfolio</a>
-        <button class="btn btn-danger btn-lg" (click)="logout()">Logout</button>
-      </div>
+<div class="dashboard-wrapper">
+  <div class="dashboard-box">
+    <h1>Bienvenue sur votre tableau de bord</h1>
+    <p class="lead">Créez et gérez votre CV ou votre portfolio facilement</p>
+
+    <!-- Tableau des actions -->
+    <div class="dashboard-btn-wrapper">
+      <a routerLink="/choose-template" class="btn dashboard-btn btn-lg">Créer / Modifier mon CV</a>
+      <a routerLink="/editor-portfolio" class="btn dashboard-btn btn-lg">Gérer mon Portfolio</a>
+    </div>
+
+    
+
+    <!-- Déconnexion -->
+    <div class="d-grid gap-3 mt-4">
+      <button class="btn logout-btn btn-lg" (click)="logout()">Se déconnecter</button>
     </div>
   </div>
-  
+</div>

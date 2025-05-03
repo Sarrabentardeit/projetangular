@@ -8,7 +8,8 @@ import { RouterModule } from '@angular/router';
   selector: 'app-dashboard',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './dashboard.component.html'
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
   constructor(private router: Router, private authService: AuthService) {}
@@ -19,7 +20,11 @@ export class DashboardComponent {
   }
 
   get userName(): string {
-    const user = this.authService.getUser();
-    return user?.name || 'Guest';
+    const email = this.authService.getUserEmail();
+    if (email) {
+      const user = this.authService.getUser(email);
+      return user?.name || 'Utilisateur';
+    }
+    return 'Guest';
   }
 }

@@ -4,46 +4,57 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AuthService {
-  private userKey = 'user';         // pour stocker les infos du compte
-  private sessionKey = 'isLoggedIn'; // pour stocker si l'utilisateur est connecté
+  private sessionKey = 'isLoggedIn';      // Clé pour vérifier si un user est connecté
+  private currentEmailKey = 'currentUser'; // Clé pour stocker l'email connecté
 
   // Enregistrer un nouvel utilisateur
   register(user: { name: string; email: string; password: string }): { success: boolean; message: string } {
-    const existingUser = JSON.parse(localStorage.getItem(this.userKey) || 'null');
-  
-    if (existingUser && existingUser.email === user.email) {
-      return { success: false, message: 'This email is already registered' };
+    const existingUser = localStorage.getItem(user.email);
+
+    if (existingUser) {
+      return { success: false, message: 'Cet email est déjà enregistré' };
     }
-  
-    localStorage.setItem(this.userKey, JSON.stringify(user));
+
+    localStorage.setItem(user.email, JSON.stringify(user));
     localStorage.setItem(this.sessionKey, 'true');
-    return { success: true, message: 'Registration successful' };
+    localStorage.setItem(this.currentEmailKey, user.email); // stocker email au moment de l'inscription
+    return { success: true, message: 'Inscription réussie' };
   }
-  
 
-  // Vérifier les identifiants et connecter
+  // Connexion utilisateur
   login(email: string, password: string): boolean {
-    const savedUser = JSON.parse(localStorage.getItem(this.userKey) || '{}');
+    const savedUser = JSON.parse(localStorage.getItem(email) || '{}');
 
-    if (email === savedUser.email && password === savedUser.password) {
+    if (savedUser && savedUser.email === email && savedUser.password === password) {
       localStorage.setItem(this.sessionKey, 'true');
+      localStorage.setItem(this.currentEmailKey, email); // stocker email au moment du login
       return true;
     }
+
     return false;
   }
 
-  // Déconnecter l'utilisateur (sans supprimer le compte)
+  // Déconnexion
   logout() {
     localStorage.setItem(this.sessionKey, 'false');
+    localStorage.removeItem(this.currentEmailKey);
   }
 
-  // Vérifie si l'utilisateur est connecté
+  // Vérifier si connecté
   isLoggedIn(): boolean {
     return localStorage.getItem(this.sessionKey) === 'true';
   }
 
-  // Récupère les infos de l'utilisateur
-  getUser() {
-    return JSON.parse(localStorage.getItem(this.userKey) || '{}');
+  // Récupérer utilisateur par email
+  getUser(email: string) {
+    return JSON.parse(localStorage.getItem(email) || '{}');
+  }
+
+  // Récupérer email connecté
+  getUserEmail(): string | null {
+    if (this.isLoggedIn()) {
+      return localStorage.getItem(this.currentEmailKey) || null;
+    }
+    return null;
   }
 }
